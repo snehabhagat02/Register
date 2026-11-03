@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Animated login and registration page">
+    <title>Nova | Login & Register</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Animated background -->
+    <div class="background-shapes">
+        <div class="shape shape-one"></div>
+        <div class="shape shape-two"></div>
+        <div class="shape shape-three"></div>
+    </div>
+
+    <main class="page-container">
+
+        <!-- Brand section -->
+        <section class="brand-panel">
+            <a href="#" class="brand-logo">✦ NOVA</a>
+
+            <div class="brand-content">
+                <span class="eyebrow">YOUR JOURNEY STARTS HERE</span>
+                <h1>Welcome to a world of <span>possibilities.</span></h1>
+                <p>
+                    Discover new opportunities, connect with your goals,
+                    and make every moment count.
+                </p>
+
+                <div class="brand-features">
+                    <div class="feature">
+                        <span class="feature-icon">✦</span>
+                        <div>
+                            <h3>Simple & Secure</h3>
+                            <p>A clean, user-friendly experience.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature">
+                        <span class="feature-icon">⚡</span>
+                        <div>
+                            <h3>Made for You</h3>
+                            <p>Everything starts with your account.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="brand-footer">© 2026 Nova. All rights reserved.</p>
+        </section>
+
+        <!-- Authentication section -->
+        <section class="auth-panel">
+
+            <div class="auth-header">
+                <span class="small-logo">✦ NOVA ACCOUNT</span>
+                <p>Join our community and get started.</p>
+            </div>
+
+            <!-- Form switch -->
+            <div class="form-switch">
+                <button type="button" class="switch-btn active"
+                        id="loginTab" aria-selected="true">
+                    Login
+                </button>
+
+                <button type="button" class="switch-btn"
+                        id="registerTab" aria-selected="false">
+                    Register
+                </button>
+
+                <span class="switch-indicator" id="switchIndicator"></span>
+            </div>
+
+            <!-- Login form -->
+            <form id="loginForm" class="auth-form active-form">
+                <h2>Welcome back!</h2>
+                <p class="form-subtitle">Enter your details to sign in.</p>
+
+                <label for="loginEmail">Email address</label>
+                <input
+                    type="email"
+                    id="loginEmail"
+                    placeholder="you@example.com"
+                    autocomplete="email"
+                    required
+                >
+
+                <label for="loginPassword">Password</label>
+                <input
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required
+                >
+
+                <div class="form-options">
+                    <label class="remember">
+                        <input type="checkbox" id="remember">
+                        <span>Remember me</span>
+                    </label>
+
+                    <a href="#" id="forgotLink">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    Sign In <span>→</span>
+                </button>
+
+                <p class="form-message" id="loginMessage" role="status"></p>
+
+                <p class="bottom-text">
+                    Don't have an account?
+                    <button type="button" class="text-switch"
+                            data-target="register">Create one</button>
+                </p>
+            </form>
+
+            <!-- Registration form -->
+            <form id="registerForm" class="auth-form">
+                <h2>Create your account</h2>
+                <p class="form-subtitle">It only takes a minute to join.</p>
+
+                <label for="fullName">Full name</label>
+                <input
+                    type="text"
+                    id="fullName"
+                    placeholder="Enter your full name"
+                    autocomplete="name"
+                    required
+                >
+
+                <label for="registerEmail">Email address</label>
+                <input
+                    type="email"
+                    id="registerEmail"
+                    placeholder="you@example.com"
+                    autocomplete="email"
+                    required
+                >
+
+                <label for="registerPassword">Create password</label>
+                <input
+                    type="password"
+                    id="registerPassword"
+                    placeholder="At least 8 characters"
+                    minlength="8"
+                    autocomplete="new-password"
+                    required
+                >
+
+                <label class="terms">
+                    <input type="checkbox" id="terms" required>
+                    <span>I agree to the Terms & Conditions.</span>
+                </label>
+
+                <button type="submit" class="submit-btn">
+                    Create Account <span>→</span>
+                </button>
+
+                <p class="form-message" id="registerMessage" role="status"></p>
+
+                <p class="bottom-text">
+                    Already have an account?
+                    <button type="button" class="text-switch"
+                            data-target="login">Sign in</button>
+                </p>
+            </form>
+
+        </section>
+    </main>
+
+    <script>
+        const loginTab = document.getElementById("loginTab");
+        const registerTab = document.getElementById("registerTab");
+        const loginForm = document.getElementById("loginForm");
+        const registerForm = document.getElementById("registerForm");
+        const indicator = document.getElementById("switchIndicator");
+
+        function showForm(type) {
+            const isLogin = type === "login";
+
+            loginForm.classList.toggle("active-form", isLogin);
+            registerForm.classList.toggle("active-form", !isLogin);
+
+            loginTab.classList.toggle("active", isLogin);
+            registerTab.classList.toggle("active", !isLogin);
+
+            loginTab.setAttribute("aria-selected", isLogin);
+            registerTab.setAttribute("aria-selected", !isLogin);
+
+            indicator.classList.toggle("move-right", !isLogin);
+
+            document.getElementById("loginMessage").textContent = "";
+            document.getElementById("registerMessage").textContent = "";
+        }
+
+        loginTab.addEventListener("click", () => showForm("login"));
+        registerTab.addEventListener("click", () => showForm("register"));
+
+        document.querySelectorAll(".text-switch").forEach(button => {
+            button.addEventListener("click", () => {
+                showForm(button.dataset.target);
+            });
+        });
+        loginForm.addEventListener("submit", event => {
+            event.preventDefault();
+
+            document.getElementById("loginMessage").textContent =
+                "Demo only: connect a backend to authenticate your account.";
+        });
+
+        registerForm.addEventListener("submit", event => {
+            event.preventDefault();
+
+            document.getElementById("registerMessage").textContent =
+                "Demo only: connect a backend to create your account.";
+        });
+
+        document.getElementById("forgotLink").addEventListener("click", event => {
+            event.preventDefault();
+
+            document.getElementById("loginMessage").textContent =
+                "Password reset requires a configured recovery service.";
+        });
+    </script>
+
+</body>
+</html>
